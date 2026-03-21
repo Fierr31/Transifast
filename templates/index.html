@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X_UA-Compatible" content="IE=edge" />
@@ -10,76 +11,139 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../static/style.css" />
 </head>
+
 <body>
   <div class="app-layout">
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <div class="logo">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-          </svg>
-          TransiFast
-        </div>
-      </div>
+    <aside class="sidebar" id="sidebar">
       <div class="sidebar-content">
         <div class="tables-section">
           <h3>Tarifas Fijas Registradas</h3>
-          
+
           <table class="tarifas-terrestres">
             <caption>Terrestres</caption>
             <thead>
-              <tr><th>Kilogramos</th><th>Precio/Kg (MXN)</th></tr>
+              <tr>
+                <th>Kilogramos</th>
+                <th>Precio/Kg (MXN)</th>
+              </tr>
             </thead>
             <tbody>
-              <tr><td>0-75.99</td><td>35.00</td></tr>
-              <tr><td>76-100.99</td><td>32.50</td></tr>
-              <tr><td>101-150.99</td><td>30.00</td></tr>
-              <tr><td>151-200.99</td><td>28.00</td></tr>
-              <tr><td>+201</td><td>25.00</td></tr>
+              <tr>
+                <td>0-75.99</td>
+                <td>35.00</td>
+              </tr>
+              <tr>
+                <td>76-100.99</td>
+                <td>32.50</td>
+              </tr>
+              <tr>
+                <td>101-150.99</td>
+                <td>30.00</td>
+              </tr>
+              <tr>
+                <td>151-200.99</td>
+                <td>28.00</td>
+              </tr>
+              <tr>
+                <td>+201</td>
+                <td>25.00</td>
+              </tr>
             </tbody>
           </table>
 
           <table class="tarifas-aéreas">
             <caption>Aéreas</caption>
             <thead>
-              <tr><th>Kilogramos</th><th>Precio/Kg (MXN)</th></tr>
+              <tr>
+                <th>Kilogramos</th>
+                <th>Precio/Kg (MXN)</th>
+              </tr>
             </thead>
             <tbody>
-              <tr><td>0-75.99</td><td>8.00</td></tr>
-              <tr><td>76-100.99</td><td>7.50</td></tr>
-              <tr><td>101-150.99</td><td>6.60</td></tr>
-              <tr><td>151-200.99</td><td>6.40</td></tr>
-              <tr><td>+201</td><td>6.00</td></tr>
+              <tr>
+                <td>0-75.99</td>
+                <td>8.00</td>
+              </tr>
+              <tr>
+                <td>76-100.99</td>
+                <td>7.50</td>
+              </tr>
+              <tr>
+                <td>101-150.99</td>
+                <td>6.60</td>
+              </tr>
+              <tr>
+                <td>151-200.99</td>
+                <td>6.40</td>
+              </tr>
+              <tr>
+                <td>+201</td>
+                <td>6.00</td>
+              </tr>
             </tbody>
           </table>
 
           <table class="Costo-adicional-terrestre">
             <caption>Costo Adicional Terrestre</caption>
             <thead>
-              <tr><th>Continente</th><th>Costo Fijo (MXN)</th></tr>
+              <tr>
+                <th>Continente</th>
+                <th>Costo Fijo (MXN)</th>
+              </tr>
             </thead>
             <tbody>
-              <tr><td>América</td><td>100.00</td></tr>
-              <tr><td>Europa</td><td>135.00</td></tr>
-              <tr><td>Asia</td><td>160.00</td></tr>
-              <tr><td>África</td><td>180.00</td></tr>
-              <tr><td>Oceanía</td><td>200.00</td></tr>
+              <tr>
+                <td>América</td>
+                <td>100.00</td>
+              </tr>
+              <tr>
+                <td>Europa</td>
+                <td>135.00</td>
+              </tr>
+              <tr>
+                <td>Asia</td>
+                <td>160.00</td>
+              </tr>
+              <tr>
+                <td>África</td>
+                <td>180.00</td>
+              </tr>
+              <tr>
+                <td>Oceanía</td>
+                <td>200.00</td>
+              </tr>
             </tbody>
           </table>
 
           <table class="Costo-adicional-aereo">
             <caption>Costo Adicional Aéreo</caption>
             <thead>
-              <tr><th>Continente</th><th>Costo Fijo (MXN)</th></tr>
+              <tr>
+                <th>Continente</th>
+                <th>Costo Fijo (MXN)</th>
+              </tr>
             </thead>
             <tbody>
-              <tr><td>América</td><td>130.00</td></tr>
-              <tr><td>Europa</td><td>165.00</td></tr>
-              <tr><td>Asia</td><td>190.00</td></tr>
-              <tr><td>África</td><td>210.00</td></tr>
-              <tr><td>Oceanía</td><td>230.00</td></tr>
+              <tr>
+                <td>América</td>
+                <td>130.00</td>
+              </tr>
+              <tr>
+                <td>Europa</td>
+                <td>165.00</td>
+              </tr>
+              <tr>
+                <td>Asia</td>
+                <td>190.00</td>
+              </tr>
+              <tr>
+                <td>África</td>
+                <td>210.00</td>
+              </tr>
+              <tr>
+                <td>Oceanía</td>
+                <td>230.00</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -88,7 +152,27 @@
 
     <main class="main-content">
       <header class="top-header">
-        <h1>Dashboard Principal</h1>
+        <div class="header-left">
+          <button id="btnToggleSidebar" class="btn-icon" aria-label="Toggle Sidebar">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+              </path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+            TransiFast
+          </div>
+        </div>
         <div class="user-actions">
           <div class="date-badge">Cotizador en vivo</div>
         </div>
@@ -99,6 +183,7 @@
           <div class="card-header">
             <h2>Calculadora de Envío</h2>
             <p>Configura los parámetros para obtener una cotización rápida y precisa.</p>
+            <p>Consulta las tarifas base en la barra lateral</p>
           </div>
 
           <div class="step active" id="step1">
@@ -116,6 +201,7 @@
           <div class="step" id="step2">
             <div class="form-group">
               <label>Selecciona el tipo de tarifa a usar:</label>
+              <label></label>
               <select id="tipoTarifa">
                 <option value="">-- Selecciona --</option>
                 <option value="baseRegistrada">Usar tarifa base registrada</option>
@@ -158,6 +244,7 @@
             </div>
 
             <button id="btnCalcular" class="btn-primary btn-block">Calcular Cotización</button>
+            <button id="btnReiniciar" class="btn-primary btn-block btn-outline" style="margin-top: 12px;">Reiniciar Formulario</button>
           </div>
         </div>
 
@@ -172,4 +259,5 @@
   </div>
   <script src="../static/script.js"></script>
 </body>
+
 </html>

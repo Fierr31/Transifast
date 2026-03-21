@@ -156,4 +156,33 @@ document.addEventListener("DOMContentLoaded", function () {
       </table>
     `;
   }
+
+  const btnToggleSidebar = document.getElementById("btnToggleSidebar");
+  if (btnToggleSidebar) {
+    btnToggleSidebar.addEventListener("click", () => {
+      document.getElementById("sidebar").classList.toggle("collapsed");
+    });
+  }
+
+  const btnReiniciar = document.getElementById("btnReiniciar");
+  if (btnReiniciar) {
+    btnReiniciar.addEventListener("click", () => {
+      document.getElementById("tipoTransporte").value = "";
+      document.getElementById("tipoTarifa").value = "";
+      document.getElementById("paisDestino").value = "";
+      document.getElementById("numCajas").value = "1";
+      document.getElementById("kgPorCaja").value = "1";
+      document.getElementById("largo").value = "";
+      document.getElementById("ancho").value = "";
+      document.getElementById("alto").value = "";
+      document.getElementById("tarifaPropia").value = "";
+      
+      document.getElementById("tarifaPropiaDiv").style.display = "none";
+      document.getElementById("resultado").innerHTML = "";
+      document.getElementById("tablaDesglose").innerHTML = "";
+
+      document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+      document.getElementById("step1").classList.add("active");
+    });
+  }
 });

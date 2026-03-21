@@ -45,15 +45,14 @@ body {
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.sidebar-header {
-  height: 72px;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid var(--border-color);
+.sidebar.collapsed {
+  margin-left: -320px;
 }
+
+/* Removed old sidebar header */
 
 .logo {
   display: flex;
@@ -136,6 +135,31 @@ body {
   justify-content: space-between;
   background-color: var(--card-bg);
   border-bottom: 1px solid var(--border-color);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s ease, fill 0.2s ease;
+  margin-left: -8px; /* Offset spacing visually */
+}
+
+.btn-icon:hover {
+  background-color: var(--input-bg);
+  color: var(--text-main);
 }
 
 .top-header h1 {
@@ -294,6 +318,17 @@ input:focus, select:focus {
   transform: translateY(-1px);
 }
 
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+}
+
+.btn-outline:hover {
+  background-color: var(--input-bg);
+  transform: translateY(-1px);
+}
+
 .btn-block {
   width: 100%;
   align-self: stretch;
@@ -396,9 +431,15 @@ input:focus, select:focus {
     border-right: none;
     border-bottom: 1px solid var(--border-color);
     max-height: 480px;
+    margin-left: 0;
+  }
+  .sidebar.collapsed {
+    margin-left: 0;
+    display: none;
   }
   .top-header {
-    display: none;
+    display: flex;
+    padding: 0 16px;
   }
   .dashboard-grid {
     padding: 24px;
