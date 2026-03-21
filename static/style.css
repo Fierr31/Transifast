@@ -1,0 +1,179 @@
+/* ======== ESTILO GLOBAL ======== */
+:root {
+  --color-principal: #003366; /* Azul marino */
+  --color-secundario: #007acc; /* Azul celeste */
+  --color-fondo: #e5eefb;
+  --color-texto: #222;
+  --color-borde: #77c0f9ac;
+  --color-resaltado: #224b76;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  margin: 0;
+  padding: 0;
+}
+
+caption {
+  font-size: 30px;
+}
+
+/* ======== CONTENEDOR PRINCIPAL ======== */
+.container {
+  max-width: 200px;
+  margin: 60px auto;
+  background-color: rgb(166, 243, 237);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  text-align: center; /* 🔹 Centra el contenido dentro del formulario */
+}
+
+/* ======== TÍTULO ======== */
+h1 {
+  padding: 3%;
+  text-align: center;
+  color: #000000;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  font-size: 60px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background-color: #73c6fd;
+}
+
+/* ======== FORMULARIO ======== */
+.step {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+  padding-bottom: 80px;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+
+.step.active {
+  display: flex;               /* ahora sí se muestra como flex */
+  opacity: 1;
+}
+
+
+
+label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 20px; /* Espacio debajo del texto indicativo */
+  font-weight: 600;
+  /*color: var(--color-principal);*/
+  font-size: 16px;
+  color: #003366;
+  letter-spacing: 0.3px;
+}
+
+input,
+select {
+  width: 100px; /* 🔹 Ajusta el ancho */
+  margin: 10px auto; /* 🔹 Centra los campos */
+  display: block; /* 🔹 Obliga a ocupar toda la línea y respetar el centrado */
+  padding: 10px 12px;
+  margin-top: 6px;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  font-size: 15px;
+  box-sizing: border-box;
+  background-color: #fff;
+  transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-secundario);
+  box-shadow: 0 0 5px rgba(0, 122, 204, 0.3);
+}
+
+/* ======== BOTONES ======== */
+button {
+  margin-top: 25px;
+  padding: 12px 20px;
+  background-color: var(--color-secundario);
+  color: white;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: block;
+  margin: 25px auto;
+}
+
+button:hover {
+  background-color: var(--color-principal);
+  transform: translateY(-1px);
+}
+
+/* ======== RESULTADOS ======== */
+.resultado {
+  margin-top: 5%;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-principal);
+  text-align: center;
+  background-color: #73c6fd;
+  padding: 43px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* ======== TABLA DE DESGLOSE ======== */
+#tablaDesglose {
+  margin-top: 25px;
+}
+
+table {
+  margin: 0 auto;
+  width: 50%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 60px; /* 🔹 Espacio debajo de la tabla */
+}
+
+th,
+td {
+  border: 1px solid var(--color-borde);
+  padding: 10px;
+  text-align: center;
+  font-size: 15px;
+}
+
+th {
+  background-color: var(--color-principal);
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f7fb;
+}
+
+/* ======== RESPONSIVO ======== */
+@media (max-width: 600px) {
+  .container {
+    padding: 25px;
+    margin: 30px 10px;
+  }
+  h1 {
+    font-size: 22px;
+  }
+  input,
+  select,
+  button {
+    font-size: 14px;
+  }
+}
