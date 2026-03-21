@@ -1,179 +1,418 @@
-/* ======== ESTILO GLOBAL ======== */
+/* ======== GLOBAL STYLES ======== */
 :root {
-  --color-principal: #003366; /* Azul marino */
-  --color-secundario: #007acc; /* Azul celeste */
-  --color-fondo: #e5eefb;
-  --color-texto: #222;
-  --color-borde: #77c0f9ac;
-  --color-resaltado: #224b76;
+  --app-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  --border-color: #e2e8f0;
+  --primary-color: #0f172a;
+  --primary-hover: #1e293b;
+  --accent-color: #3b82f6;
+  --input-bg: #f1f5f9;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-dark: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
 }
 
-body {
-  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: var(--color-fondo);
-  color: var(--color-texto);
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-caption {
-  font-size: 30px;
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--app-bg);
+  color: var(--text-main);
+  line-height: 1.5;
+  font-size: 14px;
 }
 
-/* ======== CONTENEDOR PRINCIPAL ======== */
-.container {
-  max-width: 200px;
-  margin: 60px auto;
-  background-color: rgb(166, 243, 237);
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  text-align: center; /* 🔹 Centra el contenido dentro del formulario */
+/* ======== LAYOUT ======== */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
 }
 
-/* ======== TÍTULO ======== */
-h1 {
-  padding: 3%;
-  text-align: center;
-  color: #000000;
-  margin-top: 0px;
-  margin-bottom: 20px;
-  font-size: 60px;
-  letter-spacing: 0.5px;
+/* ======== SIDEBAR ======== */
+.sidebar {
+  width: 320px;
+  background-color: var(--card-bg);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  height: 72px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.5px;
+  color: var(--primary-color);
+}
+
+.sidebar-content {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.tables-section h3 {
+  font-size: 13px;
   text-transform: uppercase;
-  background-color: #73c6fd;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
 }
 
-/* ======== FORMULARIO ======== */
+/* SIDEBAR TABLES */
+.tables-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 28px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.tables-section caption {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  padding-bottom: 10px;
+  color: var(--text-main);
+}
+
+.tables-section th {
+  background-color: var(--input-bg);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 14px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tables-section td {
+  padding: 10px 14px;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+.tables-section tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ======== MAIN CONTENT ======== */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.top-header {
+  height: 72px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.top-header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-main);
+  letter-spacing: -0.3px;
+}
+
+.date-badge {
+  background-color: var(--app-bg);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+}
+
+/* ======== DASHBOARD GRID ======== */
+.dashboard-grid {
+  padding: 32px;
+  display: grid;
+  grid-template-columns: minmax(400px, 1fr) 1.2fr;
+  gap: 32px;
+  align-items: start;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ======== CALCULATOR CARD ======== */
+.calculator-card {
+  background-color: var(--card-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 36px;
+  border: 1px solid var(--border-color);
+}
+
+.card-header {
+  margin-bottom: 32px;
+}
+
+.card-header h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+
+.card-header p {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* FORM STEPS */
 .step {
   display: none;
   flex-direction: column;
-  align-items: center;
-  padding-top: 60px;
-  padding-bottom: 80px;
   opacity: 0;
-  transition: opacity .4s ease;
+  animation: fadeIn 0.4s ease forwards;
 }
 
 .step.active {
-  display: flex;               /* ahora sí se muestra como flex */
-  opacity: 1;
+  display: flex;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
+.form-group {
+  margin-bottom: 24px;
+}
 
 label {
   display: block;
-  margin-top: 15px;
-  margin-bottom: 20px; /* Espacio debajo del texto indicativo */
-  font-weight: 600;
-  /*color: var(--color-principal);*/
-  font-size: 16px;
-  color: #003366;
-  letter-spacing: 0.3px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-main);
+  margin-bottom: 10px;
 }
 
-input,
-select {
-  width: 100px; /* 🔹 Ajusta el ancho */
-  margin: 10px auto; /* 🔹 Centra los campos */
-  display: block; /* 🔹 Obliga a ocupar toda la línea y respetar el centrado */
-  padding: 10px 12px;
-  margin-top: 6px;
-  border: 1px solid var(--color-borde);
-  border-radius: 8px;
-  font-size: 15px;
-  box-sizing: border-box;
-  background-color: #fff;
+input, select {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: var(--input-bg);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-main);
   transition: all 0.2s ease;
-}
-
-input:focus,
-select:focus {
   outline: none;
-  border-color: var(--color-secundario);
-  box-shadow: 0 0 5px rgba(0, 122, 204, 0.3);
 }
 
-/* ======== BOTONES ======== */
-button {
-  margin-top: 25px;
-  padding: 12px 20px;
-  background-color: var(--color-secundario);
+input::placeholder {
+  color: var(--text-light);
+}
+
+input:focus, select:focus {
+  background-color: var(--card-bg);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Form Grid for compact inputs */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.form-grid .form-group:first-child {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+.form-grid .form-group {
+  margin-bottom: 0;
+}
+
+.dimensions-group {
+  margin-bottom: 32px;
+}
+
+.dimensions-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+.mt-3 {
+  margin-top: 20px;
+}
+
+/* ======== BUTTONS ======== */
+.btn-primary {
+  background-color: var(--primary-color);
   color: white;
-  font-size: 15px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
+  padding: 14px 24px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.25s ease;
-  display: block;
-  margin: 25px auto;
+  transition: all 0.2s ease;
+  width: fit-content;
+  align-self: flex-start;
+  margin-top: 8px;
 }
 
-button:hover {
-  background-color: var(--color-principal);
+.btn-primary:hover {
+  background-color: var(--primary-hover);
   transform: translateY(-1px);
 }
 
-/* ======== RESULTADOS ======== */
-.resultado {
-  margin-top: 5%;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--color-principal);
-  text-align: center;
-  background-color: #73c6fd;
-  padding: 43px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-/* ======== TABLA DE DESGLOSE ======== */
-#tablaDesglose {
-  margin-top: 25px;
-}
-
-table {
-  margin: 0 auto;
-  width: 50%;
-  border-collapse: collapse;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  margin-bottom: 60px; /* 🔹 Espacio debajo de la tabla */
-}
-
-th,
-td {
-  border: 1px solid var(--color-borde);
-  padding: 10px;
-  text-align: center;
+.btn-block {
+  width: 100%;
+  align-self: stretch;
+  margin-top: 10px;
+  padding: 16px;
   font-size: 15px;
 }
 
-th {
-  background-color: var(--color-principal);
+/* ======== RESULTS AREA ======== */
+.results-area {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.resultado:not(:empty) {
+  background-color: #0f172a; /* Dark banking card like APY widget */
   color: white;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-dark);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: fadeIn 0.4s ease forwards;
 }
 
-tr:nth-child(even) {
-  background-color: #f2f7fb;
+.resultado p {
+  margin: 0;
+  font-size: 15px;
+  color: #94a3b8;
 }
 
-/* ======== RESPONSIVO ======== */
-@media (max-width: 600px) {
-  .container {
-    padding: 25px;
-    margin: 30px 10px;
+.resultado strong {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 8px;
+  letter-spacing: -1px;
+}
+
+/* For JS generated tables in tablaDesglose */
+.tablaDesglose {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-color);
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.tablaDesglose table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.tablaDesglose th {
+  background-color: #f8fafc;
+  padding: 14px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.tablaDesglose td {
+  padding: 14px;
+  font-size: 13px;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-color);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.tablaDesglose tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* ======== RESPONSIVE ======== */
+@media (max-width: 1100px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    max-width: 800px;
   }
-  h1 {
-    font-size: 22px;
+}
+
+@media (max-width: 768px) {
+  .app-layout {
+    flex-direction: column;
   }
-  input,
-  select,
-  button {
-    font-size: 14px;
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    max-height: 480px;
+  }
+  .top-header {
+    display: none;
+  }
+  .dashboard-grid {
+    padding: 24px;
+  }
+  .calculator-card {
+    padding: 24px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .dimensions-inputs {
+    grid-template-columns: 1fr;
+  }
+  .tablaDesglose {
+    overflow-x: auto;
   }
 }

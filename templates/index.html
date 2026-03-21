@@ -1,199 +1,175 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X_UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-
-  <body>
-    <h1>TransiFast Cotización</h1>
-
-    <div class="step active" id="step1">
-      <label>¿Deseas una cotización aérea ✈️ o terrestre 🚚?</label>
-      <select id="tipoTransporte">
-        <option value="">--Selecciona--</option>
-        <option value="terrestre">Terrestre 🚚</option>
-        <option value="aerea">Aérea ✈️</option>
-      </select>
-      <button id="btnStep1">Siguiente</button>
-    </div>
-
-    <div class="step" id="step2">
-      <label
-        >¿Tienes una tarifa base por kilogramo o deseas usar la tarifa base
-        registrada?</label>
-      <select id="tipoTarifa">
-        <option value="">--Selecciona--</option>
-        <option value="baseRegistrada">Usar tarifa base registrada</option>
-        <option value="propia">Ingresar mi tarifa</option>
-      </select>
-      <button id="btnStep2">Siguiente</button>
-    </div>
-
-    <div class="step" id="step3">
-      <label>País de destino:</label>
-      <input type="text" id="paisDestino" placeholder="Ej. México" />
-
-      <label>Número de cajas:</label>
-      <input type="number" id="numCajas" min="1" value="1" />
-
-      <label>Kilogramos por caja:</label>
-      <input type="number" id="kgPorCaja" min="0" step="0.01" value="1" />
-
-      <label>Medidas de la caja (cm):</label>
-      <input type="number" id="largo" placeholder="Largo" min="1" step="0.01" />
-      <input type="number" id="ancho" placeholder="Ancho" min="1" step="0.01" />
-      <input type="number" id="alto" placeholder="Alto" min="1" step="0.01" />
-
-      <div id="tarifaPropiaDiv" style="display: none">
-        <label>Tarifa base por kilogramo (MXN):</label>
-        <input type="number" id="tarifaPropia" min="0" step="0.01" />
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X_UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TransiFast - Cotización</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../static/style.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+          TransiFast
+        </div>
       </div>
+      <div class="sidebar-content">
+        <div class="tables-section">
+          <h3>Tarifas Fijas Registradas</h3>
+          
+          <table class="tarifas-terrestres">
+            <caption>Terrestres</caption>
+            <thead>
+              <tr><th>Kilogramos</th><th>Precio/Kg (MXN)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>0-75.99</td><td>35.00</td></tr>
+              <tr><td>76-100.99</td><td>32.50</td></tr>
+              <tr><td>101-150.99</td><td>30.00</td></tr>
+              <tr><td>151-200.99</td><td>28.00</td></tr>
+              <tr><td>+201</td><td>25.00</td></tr>
+            </tbody>
+          </table>
 
-      <button id="btnCalcular">Calcular Cotización</button>
-    </div>
+          <table class="tarifas-aéreas">
+            <caption>Aéreas</caption>
+            <thead>
+              <tr><th>Kilogramos</th><th>Precio/Kg (MXN)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>0-75.99</td><td>8.00</td></tr>
+              <tr><td>76-100.99</td><td>7.50</td></tr>
+              <tr><td>101-150.99</td><td>6.60</td></tr>
+              <tr><td>151-200.99</td><td>6.40</td></tr>
+              <tr><td>+201</td><td>6.00</td></tr>
+            </tbody>
+          </table>
 
-    <div class="resultado" id="resultado"></div>
-    <div class="tablaDesglose" id="tablaDesglose"></div>
+          <table class="Costo-adicional-terrestre">
+            <caption>Costo Adicional Terrestre</caption>
+            <thead>
+              <tr><th>Continente</th><th>Costo Fijo (MXN)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>América</td><td>100.00</td></tr>
+              <tr><td>Europa</td><td>135.00</td></tr>
+              <tr><td>Asia</td><td>160.00</td></tr>
+              <tr><td>África</td><td>180.00</td></tr>
+              <tr><td>Oceanía</td><td>200.00</td></tr>
+            </tbody>
+          </table>
 
-    <table class="tarifas-terrestres">
-      <caption>
-        Tabla de tarifas terrestres
-      </caption>
-      <thead>
-        <tr>
-          <th>Kilogramos</th>
-          <th>Precio por Kg/volumen kilo (MXN)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>0-75.99</td>
-          <td>35.00</td>
-        </tr>
-        <tr>
-          <td>76-100.99</td>
-          <td>32.50</td>
-        </tr>
-        <tr>
-          <td>101-150.99</td>
-          <td>30.00</td>
-        </tr>
-        <tr>
-          <td>151-200.99</td>
-          <td>28.00</td>
-        </tr>
-        <tr>
-          <td>+201</td>
-          <td>25.00</td>
-        </tr>
-      </tbody>
-    </table>
+          <table class="Costo-adicional-aereo">
+            <caption>Costo Adicional Aéreo</caption>
+            <thead>
+              <tr><th>Continente</th><th>Costo Fijo (MXN)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>América</td><td>130.00</td></tr>
+              <tr><td>Europa</td><td>165.00</td></tr>
+              <tr><td>Asia</td><td>190.00</td></tr>
+              <tr><td>África</td><td>210.00</td></tr>
+              <tr><td>Oceanía</td><td>230.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </aside>
 
-    <table class="tarifas-aéreas">
-      <caption>
-        Tabla de tarifas aéreas
-      </caption>
-      <thead>
-        <tr>
-          <th>Kilogramos</th>
-          <th>Precio por Kg/volumen kilo (MXN)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>0-75.99</td>
-          <td>8.00</td>
-        </tr>
-        <tr>
-          <td>76-100.99</td>
-          <td>7.50</td>
-        </tr>
-        <tr>
-          <td>101-150.99</td>
-          <td>6.60</td>
-        </tr>
-        <tr>
-          <td>151-200.99</td>
-          <td>6.40</td>
-        </tr>
-        <tr>
-          <td>+201</td>
-          <td>6.00</td>
-        </tr>
-      </tbody>
-    </table>
+    <main class="main-content">
+      <header class="top-header">
+        <h1>Dashboard Principal</h1>
+        <div class="user-actions">
+          <div class="date-badge">Cotizador en vivo</div>
+        </div>
+      </header>
 
-    <table class="Costo-adicional-terrestre">
-      <caption>
-        Costo adicional según continente:
-      </caption>
-      <thead>
-        <tr>
-          <th>Continente</th>
-          <th>Costo fijo (MXN)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>América (Norte, Centro y Sur)</td>
-          <td>100.00</td>
-        </tr>
-        <tr>
-          <td>Europa</td>
-          <td>135</td>
-        </tr>
-        <tr>
-          <td>Asia</td>
-          <td>160</td>
-        </tr>
-        <tr>
-          <td>África</td>
-          <td>180</td>
-        </tr>
-        <tr>
-          <td>Oceanía</td>
-          <td>200</td>
-        </tr>
-      </tbody>
-    </table>
+      <div class="dashboard-grid">
+        <div class="calculator-card">
+          <div class="card-header">
+            <h2>Calculadora de Envío</h2>
+            <p>Configura los parámetros para obtener una cotización rápida y precisa.</p>
+          </div>
 
-    <table class="Costo-adicional-aereo">
-      <caption>
-        Costo adicional según continente:
-      </caption>
-      <thead>
-        <tr>
-          <th>Continente</th>
-          <th>Costo fijo (MXN)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>América (Norte, Centro y Sur)</td>
-          <td>130.00</td>
-        </tr>
-        <tr>
-          <td>Europa</td>
-          <td>165</td>
-        </tr>
-        <tr>
-          <td>Asia</td>
-          <td>190</td>
-        </tr>
-        <tr>
-          <td>África</td>
-          <td>210</td>
-        </tr>
-        <tr>
-          <td>Oceanía</td>
-          <td>230</td>
-        </tr>
-      </tbody>
-    </table>
+          <div class="step active" id="step1">
+            <div class="form-group">
+              <label>¿Deseas una cotización aérea ✈️ o terrestre 🚚?</label>
+              <select id="tipoTransporte">
+                <option value="">-- Selecciona --</option>
+                <option value="terrestre">Terrestre</option>
+                <option value="aerea">Aérea</option>
+              </select>
+            </div>
+            <button id="btnStep1" class="btn-primary">Siguiente</button>
+          </div>
 
-    <script src="script.js"></script>
-  </body>
+          <div class="step" id="step2">
+            <div class="form-group">
+              <label>Selecciona el tipo de tarifa a usar:</label>
+              <select id="tipoTarifa">
+                <option value="">-- Selecciona --</option>
+                <option value="baseRegistrada">Usar tarifa base registrada</option>
+                <option value="propia">Ingresar mi tarifa</option>
+              </select>
+            </div>
+            <button id="btnStep2" class="btn-primary">Siguiente</button>
+          </div>
+
+          <div class="step" id="step3">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>País de destino:</label>
+                <input type="text" id="paisDestino" placeholder="Ej. México" />
+              </div>
+
+              <div class="form-group">
+                <label>Número de cajas:</label>
+                <input type="number" id="numCajas" min="1" value="1" />
+              </div>
+
+              <div class="form-group">
+                <label>Kilogramos por caja:</label>
+                <input type="number" id="kgPorCaja" min="0" step="0.01" value="1" />
+              </div>
+            </div>
+
+            <div class="dimensions-group">
+              <label>Medidas de la caja (cm):</label>
+              <div class="dimensions-inputs">
+                <input type="number" id="largo" placeholder="Largo" min="1" step="0.01" />
+                <input type="number" id="ancho" placeholder="Ancho" min="1" step="0.01" />
+                <input type="number" id="alto" placeholder="Alto" min="1" step="0.01" />
+              </div>
+            </div>
+
+            <div id="tarifaPropiaDiv" style="display: none" class="form-group mt-3">
+              <label>Tarifa base por kilogramo (MXN):</label>
+              <input type="number" id="tarifaPropia" min="0" step="0.01" placeholder="0.00" />
+            </div>
+
+            <button id="btnCalcular" class="btn-primary btn-block">Calcular Cotización</button>
+          </div>
+        </div>
+
+        <div class="results-area">
+          <div class="resultado-wrapper">
+            <div class="resultado" id="resultado"></div>
+          </div>
+          <div class="tablaDesglose" id="tablaDesglose"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="../static/script.js"></script>
+</body>
 </html>
