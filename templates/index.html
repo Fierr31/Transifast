@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X_UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TransiFast - Cotización</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../static/style.css" />
+</head>
+
+<body>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-content">
+        <div class="tables-section">
+          <h3>Tarifas Fijas Registradas</h3>
+
+          <table class="tarifas-terrestres">
+            <caption>Terrestres</caption>
+            <thead>
+              <tr>
+                <th>Kilogramos</th>
+                <th>Precio/Kg (MXN)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0-75.99</td>
+                <td>35.00</td>
+              </tr>
+              <tr>
+                <td>76-100.99</td>
+                <td>32.50</td>
+              </tr>
+              <tr>
+                <td>101-150.99</td>
+                <td>30.00</td>
+              </tr>
+              <tr>
+                <td>151-200.99</td>
+                <td>28.00</td>
+              </tr>
+              <tr>
+                <td>+201</td>
+                <td>25.00</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="tarifas-aéreas">
+            <caption>Aéreas</caption>
+            <thead>
+              <tr>
+                <th>Kilogramos</th>
+                <th>Precio/Kg (MXN)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0-75.99</td>
+                <td>8.00</td>
+              </tr>
+              <tr>
+                <td>76-100.99</td>
+                <td>7.50</td>
+              </tr>
+              <tr>
+                <td>101-150.99</td>
+                <td>6.60</td>
+              </tr>
+              <tr>
+                <td>151-200.99</td>
+                <td>6.40</td>
+              </tr>
+              <tr>
+                <td>+201</td>
+                <td>6.00</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="Costo-adicional-terrestre">
+            <caption>Costo Adicional Terrestre</caption>
+            <thead>
+              <tr>
+                <th>Continente</th>
+                <th>Costo Fijo (MXN)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>América</td>
+                <td>100.00</td>
+              </tr>
+              <tr>
+                <td>Europa</td>
+                <td>135.00</td>
+              </tr>
+              <tr>
+                <td>Asia</td>
+                <td>160.00</td>
+              </tr>
+              <tr>
+                <td>África</td>
+                <td>180.00</td>
+              </tr>
+              <tr>
+                <td>Oceanía</td>
+                <td>200.00</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="Costo-adicional-aereo">
+            <caption>Costo Adicional Aéreo</caption>
+            <thead>
+              <tr>
+                <th>Continente</th>
+                <th>Costo Fijo (MXN)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>América</td>
+                <td>130.00</td>
+              </tr>
+              <tr>
+                <td>Europa</td>
+                <td>165.00</td>
+              </tr>
+              <tr>
+                <td>Asia</td>
+                <td>190.00</td>
+              </tr>
+              <tr>
+                <td>África</td>
+                <td>210.00</td>
+              </tr>
+              <tr>
+                <td>Oceanía</td>
+                <td>230.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="top-header">
+        <div class="header-left">
+          <button id="btnToggleSidebar" class="btn-icon" aria-label="Toggle Sidebar">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+              </path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+            TransiFast
+          </div>
+        </div>
+        <div class="user-actions">
+          <div class="date-badge">Cotizador en vivo</div>
+        </div>
+      </header>
+
+      <div class="dashboard-grid" style="align-items: start;">
+        <div class="calculator-card">
+            <div class="card-header">
+              <h2>Calculadora de Envío</h2>
+              <p>Configura los parámetros para obtener una cotización rápida y precisa.</p>
+              <p>Consulta las tarifas base en la barra lateral</p>
+            </div>
+
+            <div class="step active" id="step1">
+              <div class="form-group">
+                <label>¿Deseas una cotización aérea o terrestre?</label>
+                <select id="tipoTransporte">
+                  <option value="">-- Selecciona --</option>
+                  <option value="terrestre">Terrestre</option>
+                  <option value="aerea">Aérea</option>
+                </select>
+              </div>
+              <button id="btnStep1" class="btn-primary">Siguiente</button>
+            </div>
+
+            <div class="step" id="step2">
+              <div class="form-group">
+                <label>Selecciona el tipo de tarifa a usar:</label>
+                <label></label>
+                <select id="tipoTarifa">
+                  <option value="">-- Selecciona --</option>
+                  <option value="baseRegistrada">Usar tarifa base registrada</option>
+                  <option value="propia">Ingresar mi tarifa</option>
+                </select>
+              </div>
+              <button id="btnStep2" class="btn-primary">Siguiente</button>
+            </div>
+
+            <div class="step" id="step3">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>País de destino:</label>
+                  <input type="text" id="paisDestino" placeholder="Ej. México" />
+                </div>
+
+                <div class="form-group">
+                  <label>Número de cajas:</label>
+                  <input type="number" id="numCajas" min="1" value="1" />
+                </div>
+
+                <div class="form-group">
+                  <label>Kilogramos por caja:</label>
+                  <input type="number" id="kgPorCaja" min="0" step="0.01" value="1" />
+                </div>
+              </div>
+
+              <div class="dimensions-group">
+                <label>Medidas de la caja (cm):</label>
+                <div class="dimensions-inputs">
+                  <input type="number" id="largo" placeholder="Largo" min="1" step="0.01" />
+                  <input type="number" id="ancho" placeholder="Ancho" min="1" step="0.01" />
+                  <input type="number" id="alto" placeholder="Alto" min="1" step="0.01" />
+                </div>
+              </div>
+
+              <div id="tarifaPropiaDiv" style="display: none" class="form-group mt-3">
+                <label>Tarifa base por kilogramo (MXN):</label>
+                <input type="number" id="tarifaPropia" min="0" step="0.01" placeholder="0.00" />
+              </div>
+
+              <button id="btnCalcular" class="btn-primary btn-block">Calcular Cotización</button>
+              <button id="btnReiniciar" class="btn-primary btn-block btn-outline" style="margin-top: 12px;">Reiniciar
+                Formulario</button>
+            </div>
+          </div>
+
+        <div class="results-area">
+          <div class="resultado-wrapper">
+            <div class="resultado" id="resultado"></div>
+          </div>
+          <div class="tablaDesglose" id="tablaDesglose"></div>
+        </div>
+
+        <div class="calculator-card" id="ruta-card">
+            <div class="card-header">
+              <h2>Consulta de rutas en el territorio nacional</h2>
+              <p>Selecciona los puntos de origen y destino</p>
+            </div>
+
+            <div class="form-group">
+              <label>Estado de origen:</label>
+              <select id="edoOrigen">
+                <option value="">-- Selecciona --</option>
+                <option value="1">Aguascalientes</option>
+                <option value="2">Baja California</option>
+                <option value="3">Baja California Sur</option>
+                <option value="4">Campeche</option>
+                <option value="5">Coahuila</option>
+                <option value="6">Colima</option>
+                <option value="7">Chiapas</option>
+                <option value="8">Chihuahua</option>
+                <option value="9">Distrito Federal</option>
+                <option value="10">Durango</option>
+                <option value="11">Guanajuato</option>
+                <option value="12">Guerrero</option>
+                <option value="13">Hidalgo</option>
+                <option value="14">Jalisco</option>
+                <option value="15">México</option>
+                <option value="16">Michoacán</option>
+                <option value="17">Morelos</option>
+                <option value="18">Nayarit</option>
+                <option value="19">Nuevo León</option>
+                <option value="20">Oaxaca</option>
+                <option value="21">Puebla</option>
+                <option value="22">Querétaro</option>
+                <option value="23">Quintana Roo</option>
+                <option value="24">San Luis Potosí</option>
+                <option value="25">Sinaloa</option>
+                <option value="26">Sonora</option>
+                <option value="27">Tabasco</option>
+                <option value="28">Tamaulipas</option>
+                <option value="29">Tlaxcala</option>
+                <option value="30">Veracruz</option>
+                <option value="31">Yucatán</option>
+                <option value="32">Zacatecas</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Ciudad de origen:</label>
+              <select id="ciudadOrigen">
+                <option value="">-- Selecciona --</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Estado de destino:</label>
+              <select id="edoDestino">
+                <option value="">-- Selecciona --</option>
+                <option value="1">Aguascalientes</option>
+                <option value="2">Baja California</option>
+                <option value="3">Baja California Sur</option>
+                <option value="4">Campeche</option>
+                <option value="5">Coahuila</option>
+                <option value="6">Colima</option>
+                <option value="7">Chiapas</option>
+                <option value="8">Chihuahua</option>
+                <option value="9">Distrito Federal</option>
+                <option value="10">Durango</option>
+                <option value="11">Guanajuato</option>
+                <option value="12">Guerrero</option>
+                <option value="13">Hidalgo</option>
+                <option value="14">Jalisco</option>
+                <option value="15">México</option>
+                <option value="16">Michoacán</option>
+                <option value="17">Morelos</option>
+                <option value="18">Nayarit</option>
+                <option value="19">Nuevo León</option>
+                <option value="20">Oaxaca</option>
+                <option value="21">Puebla</option>
+                <option value="22">Querétaro</option>
+                <option value="23">Quintana Roo</option>
+                <option value="24">San Luis Potosí</option>
+                <option value="25">Sinaloa</option>
+                <option value="26">Sonora</option>
+                <option value="27">Tabasco</option>
+                <option value="28">Tamaulipas</option>
+                <option value="29">Tlaxcala</option>
+                <option value="30">Veracruz</option>
+                <option value="31">Yucatán</option>
+                <option value="32">Zacatecas</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Ciudad de destino:</label>
+              <select id="ciudadDestino">
+                <option value="">-- Selecciona --</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Vehículo:</label>
+              <select id="vehiculos">
+                <option value="">-- Selecciona --</option>
+                <option value="T">Todos</option>
+                <option value="A">Automóviles</option>
+                <option value="B">Autobuses</option>
+                <option value="C">Camiones</option>
+                <option value="1">Motocicleta</option>
+                <option value="2">Automóvil</option>
+                <option value="3">Automóvil remolque 1 eje</option>
+                <option value="4">Automóvil remolque 2 eje</option>
+                <option value="5">Pick Ups</option>
+                <option value="6">Autobus 2 ejes</option>
+                <option value="7">Autobus 3 ejes</option>
+                <option value="8">Autobus 4 ejes</option>
+                <option value="9">Camión 2 ejes</option>
+                <option value="10">Camión 3 ejes</option>
+                <option value="11">Camión 4 ejes</option>
+                <option value="12">Camión 5 ejes</option>
+                <option value="13">Camión 6 ejes</option>
+                <option value="14">Camión 7 ejes</option>
+                <option value="15">Camión 8 ejes</option>
+                <option value="16">Camión 9 ejes</option>
+              </select>
+            </div>
+
+            <button id="btnConsultarRuta" class="btn-primary btn-block">Consultar Ruta</button>
+          </div>
+
+        <div class="results-area">
+          <div class="resultado-wrapper" id="resultadoRutaWrapper" style="display: none;">
+            <div class="resultado" id="resultadoRuta" style="display: flex; flex-direction: column;"></div>
+          </div>
+          <div class="tablaDesglose" id="tablaRuta" style="margin-top: 24px;"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="../static/script.js"></script>
+</body>
+
+</html>
