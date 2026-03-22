@@ -2,11 +2,26 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel
+from typing import Optional
 import uvicorn
 from backend.ciudades import ciudad
 from backend.apiruta import consulta
+from backend.cotizacion import calcular_cotizacion
 
 app = FastAPI()
+
+class CotizacionRequest(BaseModel):
+    tipoTransporte: str
+    tipoTarifa: str
+    tarifaPropia: Optional[float] = None
+    pais: str
+    numCajas: int
+    kgPorCaja: float
+    largo: float
+    ancho: float
+    alto: float
+
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -26,6 +41,11 @@ async def get_ruta(edoOrigen: str, ciudadOrigen: str, edoDestino: str, ciudadDes
     # Llama a la funcion consulta importada desde backend/apiruta.py
     data = consulta(edoOrigen, edoDestino, ciudadOrigen, ciudadDestino, vehiculo)
     return data
+
+@app.post("/api/cotizar")
+async def cotizar(req: CotizacionRequest):
+    return calcular_cotizacion(req.dict())
+
 
 if __name__ == "__main__":
     import os

@@ -44,7 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById(next).classList.add("active");
   }
 
-  function calcularCotizacion() {
+  async function calcularCotizacion() {
+    const btnCalc = document.getElementById("btnCalcular");
     const tipoTransporte = document.getElementById("tipoTransporte").value;
     const tipoTarifa = document.getElementById("tipoTarifa").value;
     const pais = document.getElementById("paisDestino").value.trim();
@@ -63,96 +64,77 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    let tarifaBase;
-    const pesoTotal = numCajas * kgPorCaja;
-
-    if (tipoTarifa === "baseRegistrada") {
-      if (tipoTransporte === "terrestre") {
-        if (pesoTotal <= 75.99) tarifaBase = 35;
-        else if (pesoTotal <= 100.99) tarifaBase = 32.5;
-        else if (pesoTotal <= 150.99) tarifaBase = 30;
-        else if (pesoTotal <= 200.99) tarifaBase = 28;
-        else tarifaBase = 25;
-      } else {
-        if (pesoTotal <= 75.99) tarifaBase = 8;
-        else if (pesoTotal <= 100.99) tarifaBase = 7.5;
-        else if (pesoTotal <= 150.99) tarifaBase = 6.6;
-        else if (pesoTotal <= 200.99) tarifaBase = 6.4;
-        else tarifaBase = 6;
-      }
-    } else {
-      tarifaBase = tarifaPropia;
+    if (btnCalc) {
+      btnCalc.textContent = "Calculando...";
+      btnCalc.disabled = true;
     }
 
-    let costoContinente = 0;
-    const paisLower = pais.toLowerCase();
+    try {
+      const response = await fetch("/api/cotizar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tipoTransporte,
+          tipoTarifa,
+          tarifaPropia,
+          pais,
+          numCajas,
+          kgPorCaja,
+          largo,
+          ancho,
+          alto
+        })
+      });
 
-    if (paisLower === "mexico") costoContinente = 0;
-    else if (
-      [
-        "canada",
-        "usa",
-        "colombia",
-        "brasil",
-        "argentina",
-        "chile",
-        "peru",
-        "venezuela",
-      ].includes(paisLower)
-    )
-      costoContinente = tipoTransporte === "terrestre" ? 100 : 130;
-    else if (
-      ["francia", "alemania", "italia", "suiza", "españa"].includes(paisLower)
-    )
-      costoContinente = tipoTransporte === "terrestre" ? 135 : 165;
-    else if (["china", "japon", "india", "tailandia"].includes(paisLower))
-      costoContinente = tipoTransporte === "terrestre" ? 160 : 190;
-    else if (["sudafrica", "nigeria", "egipto"].includes(paisLower))
-      costoContinente = tipoTransporte === "terrestre" ? 180 : 210;
-    else costoContinente = tipoTransporte === "terrestre" ? 200 : 230;
+      if (!response.ok) throw new Error("Error en servidor API");
+      
+      const data = await response.json();
 
-    const factorVol = tipoTransporte === "terrestre" ? 250 : 166.667;
-    const pesoVol = largo * ancho * alto * numCajas * factorVol;
-    const pesoRealTotal = pesoTotal * tarifaBase;
-    const pesoVolTotal = pesoVol * tarifaBase;
-    const totalReal = pesoRealTotal + costoContinente;
-    const totalVol = pesoVolTotal + costoContinente;
+      document.getElementById("resultado").innerHTML = `
+        <p>Cotización por peso real: <strong>${data.totalReal.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</strong></p>
+        <p>Cotización por peso volumétrico: <strong>${data.totalVol.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</strong></p>
+      `;
 
-    document.getElementById("resultado").innerHTML = `
-      <p>Cotización por peso real: <strong>${totalReal.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</strong></p>
-      <p>Cotización por peso volumétrico: <strong>${totalVol.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</strong></p>
-    `;
+      document.getElementById("tablaDesglose").innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Tipo transporte</th>
+              <th>País</th>
+              <th>Cajas</th>
+              <th>Peso total (kg)</th>
+              <th>Volumen (m³)</th>
+              <th>Tarifa (MXN/kg)</th>
+              <th>Adicional continente</th>
+              <th>Total peso real</th>
+              <th>Total peso volumétrico</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>${tipoTransporte.toUpperCase()}</td>
+              <td>${pais}</td>
+              <td>${numCajas}</td>
+              <td>${data.pesoTotal.toFixed(2)}</td>
+              <td>${data.volumen_m3.toFixed(3)}</td>
+              <td>${data.tarifaBase.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
+              <td>${data.costoContinente.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
+              <td>${data.totalReal.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
+              <td>${data.totalVol.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
+            </tr>
+          </tbody>
+        </table>
+      `;
 
-    document.getElementById("tablaDesglose").innerHTML = `
-      <table>
-        <thead>
-          <tr>
-            <th>Tipo transporte</th>
-            <th>País</th>
-            <th>Cajas</th>
-            <th>Peso total (kg)</th>
-            <th>Volumen (m³)</th>
-            <th>Tarifa (MXN/kg)</th>
-            <th>Adicional continente</th>
-            <th>Total peso real</th>
-            <th>Total peso volumétrico</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>${tipoTransporte.toUpperCase()}</td>
-            <td>${pais}</td>
-            <td>${numCajas}</td>
-            <td>${pesoTotal.toFixed(2)}</td>
-            <td>${(largo * ancho * alto * numCajas).toFixed(3)}</td>
-            <td>${tarifaBase.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
-            <td>${costoContinente.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
-            <td>${totalReal.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
-            <td>${totalVol.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
-          </tr>
-        </tbody>
-      </table>
-    `;
+    } catch (e) {
+      console.error(e);
+      alert("Ocurrió un error al calcular la cotización.");
+    } finally {
+      if (btnCalc) {
+        btnCalc.textContent = "Calcular Cotización";
+        btnCalc.disabled = false;
+      }
+    }
   }
 
   const btnToggleSidebar = document.getElementById("btnToggleSidebar");
@@ -335,6 +317,23 @@ document.addEventListener("DOMContentLoaded", function () {
         btnConsultarRuta.textContent = "Consultar Ruta";
         btnConsultarRuta.disabled = false;
       }
+    });
+  }
+
+  const btnReiniciarRuta = document.getElementById("btnReiniciarRuta");
+  if (btnReiniciarRuta) {
+    btnReiniciarRuta.addEventListener("click", () => {
+      document.getElementById("edoOrigen").value = "";
+      document.getElementById("ciudadOrigen").innerHTML = '<option value="">-- Selecciona --</option>';
+      document.getElementById("edoDestino").value = "";
+      document.getElementById("ciudadDestino").innerHTML = '<option value="">-- Selecciona --</option>';
+      document.getElementById("vehiculos").value = "";
+
+      const wrapRuta = document.getElementById("resultadoRutaWrapper");
+      if (wrapRuta) wrapRuta.style.display = "none";
+      
+      document.getElementById("resultadoRuta").innerHTML = "";
+      document.getElementById("tablaRuta").innerHTML = "";
     });
   }
 });
