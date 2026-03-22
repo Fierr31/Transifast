@@ -119,10 +119,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const totalVol = pesoVolTotal + costoContinente;
 
     document.getElementById("resultado").innerHTML = `
-      <p>Cotización por peso real: <strong>$${totalReal.toFixed(2)}</strong></p>
-      <p>Cotización por peso volumétrico: <strong>$${totalVol.toFixed(
-        2
-      )}</strong></p>
+      <p>Cotización por peso real: <strong>${totalReal.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</strong></p>
+      <p>Cotización por peso volumétrico: <strong>${totalVol.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</strong></p>
     `;
 
     document.getElementById("tablaDesglose").innerHTML = `
@@ -147,10 +145,10 @@ document.addEventListener("DOMContentLoaded", function () {
             <td>${numCajas}</td>
             <td>${pesoTotal.toFixed(2)}</td>
             <td>${(largo * ancho * alto * numCajas).toFixed(3)}</td>
-            <td>$${tarifaBase.toFixed(2)}</td>
-            <td>$${costoContinente.toFixed(2)}</td>
-            <td>$${totalReal.toFixed(2)}</td>
-            <td>$${totalVol.toFixed(2)}</td>
+            <td>${tarifaBase.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
+            <td>${costoContinente.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
+            <td>${totalReal.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
+            <td>${totalVol.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
           </tr>
         </tbody>
       </table>
@@ -176,13 +174,167 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("ancho").value = "";
       document.getElementById("alto").value = "";
       document.getElementById("tarifaPropia").value = "";
-      
+
       document.getElementById("tarifaPropiaDiv").style.display = "none";
       document.getElementById("resultado").innerHTML = "";
       document.getElementById("tablaDesglose").innerHTML = "";
 
       document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
       document.getElementById("step1").classList.add("active");
+    });
+  }
+
+  // --- Lógica de selectores dinámicos de Ciudades ---
+  const edoOrigen = document.getElementById("edoOrigen");
+  const ciudadOrigen = document.getElementById("ciudadOrigen");
+
+  if (edoOrigen && ciudadOrigen) {
+    edoOrigen.addEventListener("change", async (e) => {
+      const estadoId = e.target.value;
+      ciudadOrigen.innerHTML = '<option value="">-- Cargando... --</option>';
+      if (!estadoId) {
+        ciudadOrigen.innerHTML = '<option value="">-- Selecciona --</option>';
+        return;
+      }
+      try {
+        const response = await fetch(`/api/ciudades/${estadoId}`);
+        const data = await response.json();
+
+        ciudadOrigen.innerHTML = '<option value="">-- Selecciona --</option>';
+        data.ciudades.forEach(ciudad => {
+          const option = document.createElement("option");
+          option.value = ciudad.id;
+          option.textContent = ciudad.nombre;
+          ciudadOrigen.appendChild(option);
+        });
+      } catch (err) {
+        console.error("Error cargando ciudades de origen:", err);
+        ciudadOrigen.innerHTML = '<option value="">-- Error al cargar --</option>';
+      }
+    });
+  }
+
+  const edoDestino = document.getElementById("edoDestino");
+  const ciudadDestino = document.getElementById("ciudadDestino");
+
+  if (edoDestino && ciudadDestino) {
+    edoDestino.addEventListener("change", async (e) => {
+      const estadoId = e.target.value;
+      ciudadDestino.innerHTML = '<option value="">-- Cargando... --</option>';
+      if (!estadoId) {
+        ciudadDestino.innerHTML = '<option value="">-- Selecciona --</option>';
+        return;
+      }
+      try {
+        const response = await fetch(`/api/ciudades/${estadoId}`);
+        const data = await response.json();
+
+        ciudadDestino.innerHTML = '<option value="">-- Selecciona --</option>';
+        data.ciudades.forEach(ciudad => {
+          const option = document.createElement("option");
+          option.value = ciudad.id;
+          option.textContent = ciudad.nombre;
+          ciudadDestino.appendChild(option);
+        });
+      } catch (err) {
+        console.error("Error cargando ciudades de destino:", err);
+        ciudadDestino.innerHTML = '<option value="">-- Error al cargar --</option>';
+      }
+    });
+  }
+
+  // --- Lógica de Consulta de Ruta ---
+  const btnConsultarRuta = document.getElementById("btnConsultarRuta");
+  if (btnConsultarRuta) {
+    btnConsultarRuta.addEventListener("click", async () => {
+      const edoOrigen = document.getElementById("edoOrigen").value;
+      const ciudadOrigen = document.getElementById("ciudadOrigen").value;
+      const edoDestino = document.getElementById("edoDestino").value;
+      const ciudadDestino = document.getElementById("ciudadDestino").value;
+      const vehiculos = document.getElementById("vehiculos").value;
+
+      if (!edoOrigen || !ciudadOrigen || !edoDestino || !ciudadDestino || !vehiculos) {
+        alert("Completa todos los campos para consultar la ruta.");
+        return;
+      }
+
+      btnConsultarRuta.textContent = "Consultando...";
+      btnConsultarRuta.disabled = true;
+
+      try {
+        const response = await fetch(`/api/ruta?edoOrigen=${edoOrigen}&ciudadOrigen=${ciudadOrigen}&edoDestino=${edoDestino}&ciudadDestino=${ciudadDestino}&vehiculo=${vehiculos}`);
+        const data = await response.json();
+
+        const resRuta = document.getElementById("resultadoRuta");
+        const wrapRuta = document.getElementById("resultadoRutaWrapper");
+        if (wrapRuta) wrapRuta.style.display = "block";
+
+        let rutaHTML = `<p style="color: #94a3b8; font-size: 13px; text-transform: uppercase; margin-bottom: 8px;">${data.ruta || 'Ruta consultada'}</p>`;
+
+        if (data.totales) {
+          rutaHTML += `
+            <div style="display: flex; justify-content: space-around; margin-top: 16px; flex-wrap: wrap; gap: 16px;">
+              <div>
+                <p style="margin:0; color:#94a3b8; font-size:14px;">Distancia Total</p>
+                <strong style="font-size:24px; color:#fff;">${data.totales.distancia_km || 0} km</strong>
+              </div>
+              <div>
+                <p style="margin:0; color:#94a3b8; font-size:14px;">Tiempo Estimado (Horas)</p>
+                <strong style="font-size:24px; color:#fff;">${data.totales.tiempo || '00:00'}</strong>
+              </div>
+              <div>
+                <p style="margin:0; color:#94a3b8; font-size:14px;">Costo Casetas</p>
+                <strong style="font-size:24px; color:#fff;">${(data.totales.costo || 0).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</strong>
+              </div>
+            </div>
+          `;
+        }
+        resRuta.innerHTML = rutaHTML;
+
+        let tramosHtml = `
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Carretera</th>
+                <th>Distancia (km)</th>
+                <th>Tiempo</th>
+                <th>Caseta</th>
+                <th>Costo</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        if (data.tramos && data.tramos.length > 0) {
+          data.tramos.forEach(tramo => {
+            tramosHtml += `
+              <tr>
+                <td>${tramo.nombre || '-'}</td>
+                <td>${tramo.estado || '-'}</td>
+                <td>${tramo.carretera || '-'}</td>
+                <td>${tramo.distancia_km || 0}</td>
+                <td>${tramo.tiempo || '-'}</td>
+                <td>${tramo.caseta || '-'}</td>
+                <td>${(tramo.costo || 0).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
+              </tr>
+            `;
+          });
+        } else {
+          tramosHtml += `<tr><td colspan="7" style="text-align: center;">No se encontraron tramos</td></tr>`;
+        }
+
+        tramosHtml += `</tbody></table>`;
+        document.getElementById("tablaRuta").innerHTML = tramosHtml;
+
+      } catch (error) {
+        console.error(error);
+        alert("Ocurrió un error al consultar la ruta. Revisa la consola para más detalles.");
+      } finally {
+        btnConsultarRuta.textContent = "Consultar Ruta";
+        btnConsultarRuta.disabled = false;
+      }
     });
   }
 });
