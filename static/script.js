@@ -1,5 +1,7 @@
 // Configura los eventos apenas carga la página
 document.addEventListener("DOMContentLoaded", function () {
+  let ultimaCotizacion = null;
+
   const btn1 = document.getElementById("btnStep1");
   const btn2 = document.getElementById("btnStep2");
   const btnCalc = document.getElementById("btnCalcular");
@@ -64,6 +66,24 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
+    if (tipoTransporte === "terrestre") {
+      const allowedCountries = [
+        "canada", "estados unidos", "mexico", "guatemala",
+        "el salvador", "honduras", "nicaragua", "costa rica", "panama"
+      ];
+
+      const normalizeString = (str) => {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      };
+
+      const normalizedPais = normalizeString(pais);
+
+      if (!allowedCountries.includes(normalizedPais)) {
+        alert("Para cotización terrestre, el país debe ser: Canadá, Estados Unidos, México, Guatemala, El Salvador, Honduras, Nicaragua, Costa Rica o Panamá.");
+        return;
+      }
+    }
+
     if (btnCalc) {
       btnCalc.textContent = "Calculando...";
       btnCalc.disabled = true;
@@ -87,8 +107,14 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       if (!response.ok) throw new Error("Error en servidor API");
-      
+
       const data = await response.json();
+
+      ultimaCotizacion = {
+        pais: pais,
+        totalReal: data.totalReal,
+        totalVol: data.totalVol
+      };
 
       document.getElementById("resultado").innerHTML = `
         <p>Cotización por peso real: <strong>${data.totalReal.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</strong></p>
@@ -160,6 +186,10 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("tarifaPropiaDiv").style.display = "none";
       document.getElementById("resultado").innerHTML = "";
       document.getElementById("tablaDesglose").innerHTML = "";
+
+      ultimaCotizacion = null;
+      const wrapCotiRuta = document.getElementById("resumenCotizacionRutaWrapper");
+      if (wrapCotiRuta) wrapCotiRuta.style.display = "none";
 
       document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
       document.getElementById("step1").classList.add("active");
@@ -273,6 +303,29 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         resRuta.innerHTML = rutaHTML;
 
+        const resumenCotiRutaWrap = document.getElementById("resumenCotizacionRutaWrapper");
+        const resumenCotiRuta = document.getElementById("resumenCotizacionRuta");
+        
+        const paisActual = document.getElementById("paisDestino").value.trim();
+        const paisNormalizado = paisActual.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+        if (paisNormalizado === "mexico" && ultimaCotizacion) {
+          const costoCasetas = data.totales ? (data.totales.costo || 0) : 0;
+          const totalRealConCasetas = ultimaCotizacion.totalReal + costoCasetas;
+          const totalVolConCasetas = ultimaCotizacion.totalVol + costoCasetas;
+
+          if (resumenCotiRutaWrap && resumenCotiRuta) {
+            resumenCotiRutaWrap.style.display = "block";
+            resumenCotiRuta.innerHTML = `
+              <h3 style="margin-top: 0; margin-bottom: 12px; color: #fff; font-size: 16px;">Costo Total (Cotización + Ruta)</h3>
+              <p>Cotización (peso real) + Casetas: <strong style="color: #10b981;">${totalRealConCasetas.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</strong></p>
+              <p>Cotización (peso volumétrico) + Casetas: <strong style="color: #10b981;">${totalVolConCasetas.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</strong></p>
+            `;
+          }
+        } else {
+          if (resumenCotiRutaWrap) resumenCotiRutaWrap.style.display = "none";
+        }
+
         let tramosHtml = `
           <table>
             <thead>
@@ -331,7 +384,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const wrapRuta = document.getElementById("resultadoRutaWrapper");
       if (wrapRuta) wrapRuta.style.display = "none";
-      
+
+      const wrapResumen = document.getElementById("resumenCotizacionRutaWrapper");
+      if (wrapResumen) wrapResumen.style.display = "none";
+
       document.getElementById("resultadoRuta").innerHTML = "";
       document.getElementById("tablaRuta").innerHTML = "";
     });
